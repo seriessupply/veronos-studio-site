@@ -1,0 +1,16 @@
+{
+ "updated": "2026-11-05",
+ "rows": [
+  {
+   "id": "test-2026-11-05",
+   "company": "TEST (Veronos sender)",
+   "email": "kashangell4@gmail.com",
+   "first_name": "Kash",
+   "subject": "Veronos sender test",
+   "body1": "Hey Kash,\n\nThis is a test of the Veronos outreach sender. The before and after image should show below.\n\nKash",
+   "body2": "Test follow-up 1.",
+   "body3": "Test follow-up 2.",
+   "image_url": "https://veronosstudio.com/o/pDJPmZUsKxnXApxVRLI8Wojj/wilfs-electric-ltd.jpg"
+  }
+ ]
+}
