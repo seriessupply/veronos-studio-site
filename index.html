@@ -171,6 +171,7 @@ form{display:grid;gap:30px;padding-top:12px}
 .field input{font:400 26px/1.3 var(--serif);color:var(--fg);background:transparent;border:0;border-bottom:1.5px solid var(--line);padding:10px 0;border-radius:0;width:100%;transition:border-color .3s}
 .field input:focus{outline:none;border-bottom-color:var(--gold)}
 .field input::placeholder{color:var(--sub);opacity:.5}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 form .btn{justify-self:start;margin-top:10px}
 .err{color:#F0B9A4;font-size:15px}
 
@@ -321,6 +322,8 @@ footer{padding-block:60px calc(40px + env(safe-area-inset-bottom,0px));overflow:
     <div class="field"><label for="biz">Business name</label><input id="biz" name="business" autocomplete="organization" placeholder="Your business"></div>
     <div class="field"><label for="site">Current website</label><input id="site" name="website" inputmode="url" placeholder="yourbusiness.com"></div>
     <div class="field"><label for="mail">Email</label><input id="mail" name="email" type="email" autocomplete="email" placeholder="you@yourbusiness.com"></div>
+    <div class="field"><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(403) 555-0123"></div>
+    <div class="hp" aria-hidden="true"><label for="company_url">Leave this empty</label><input id="company_url" name="company_url" tabindex="-1" autocomplete="off"></div>
     <p class="err" id="err" hidden></p>
     <button class="btn btn-gold mag" type="submit">Show me my new homepage</button>
   </form>
@@ -337,7 +340,6 @@ footer{padding-block:60px calc(40px + env(safe-area-inset-bottom,0px));overflow:
   <h2 id="rc-h">We're on it.</h2>
   <p id="rc-p">Your new homepage is next. Watch your inbox.</p>
   <button class="btn btn-dark" type="button" id="rc-close">Back to the site</button>
-  <small>Preview build: this form isn't connected yet.</small>
 </div></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -534,11 +536,20 @@ if (fine && !reduce) {
 
 /* ---------- form + received screen ---------- */
 var f = document.getElementById('form'), err = document.getElementById('err'), rc = document.getElementById('received');
-f.addEventListener('submit', function(e){
+var LEAD_URL = 'https://script.google.com/macros/s/AKfycbzdFzwp6u6lnz-5PdJpgpscGt2pWL3eWhxnGODltH0_IGiWh5g_GzlGX8EDNOswOue3/exec';
+f.addEventListener('submit', async function(e){
   e.preventDefault();
   var biz = f.biz.value.trim(), mail = f.mail.value.trim();
   if (!biz || !/\S+@\S+\.\S+/.test(mail)) { err.textContent = 'Add your business name and a valid email so we know where to send your new homepage.'; err.hidden = false; return; }
   err.hidden = true;
+  var btn = f.querySelector('button[type="submit"]'), label = btn.textContent; btn.disabled = true; btn.textContent = 'Sending…';
+  try {
+    await fetch(LEAD_URL, {method:'POST', mode:'no-cors', body:new URLSearchParams({business:biz, website:f.site.value.trim(), email:mail, phone:f.phone.value.trim(), company_url:f.company_url.value})});
+  } catch(x) {
+    btn.disabled = false; btn.textContent = label;
+    err.textContent = 'That did not send. Check your connection and try again.'; err.hidden = false; return;
+  }
+  btn.disabled = false; btn.textContent = label;
   document.getElementById('rc-p').textContent = 'The new homepage for ' + biz + ' is next. Watch for it at ' + mail + '.';
   rc.hidden = false; if (lenis) lenis.stop();
   if (hasG && !reduce) { gsap.from('#received', {clipPath:'circle(0% at 50% 100%)', duration:.9, ease:'power4.inOut'}); gsap.from('#received .st', {scale:0, rotate:-180, duration:1, delay:.4, ease:'power3.out'}); }
