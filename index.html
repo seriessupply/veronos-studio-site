@@ -277,14 +277,14 @@ footer{padding-block:60px calc(40px + env(safe-area-inset-bottom,0px));overflow:
 <section class="pricing" id="pricing"><div class="wrap">
   <div class="head">
     <h2 class="big"><span class="ln"><span>Simple,</span></span><span class="ln"><span>upfront pricing.</span></span></h2>
-    <div class="toggle" role="group" aria-label="Billing"><span class="pill" id="pill"></span><button type="button" id="b-month" aria-pressed="true">Monthly</button><button type="button" id="b-year" aria-pressed="false">Pay the year</button></div>
+    <div class="toggle" role="group" aria-label="Plan"><span class="pill" id="pill"></span><button type="button" id="b-month" aria-pressed="true">1–2 pages</button><button type="button" id="b-year" aria-pressed="false">Full site</button></div>
   </div>
   <div class="ticket">
     <div class="t-main">
-      <div class="t-label" id="plan-label">Monthly plan</div>
+      <div class="t-label" id="plan-label">Starter</div>
       <div class="amount" aria-live="polite"><span class="cur">$</span><span class="odo" id="odo"></span></div>
       <div class="per" id="per">CAD per month</div>
-      <div class="sub" id="plan-sub">+ $500 one-time build</div>
+      <div class="sub" id="plan-sub">1–2 pages. No setup fee.</div>
     </div>
     <div class="t-side">
       <ul>
@@ -299,7 +299,7 @@ footer{padding-block:60px calc(40px + env(safe-area-inset-bottom,0px));overflow:
   </div>
   <div class="promises">
     <div><h3>See it before you pay.</h3><p>Your new homepage is designed and in your hands before you spend a dollar.</p></div>
-    <div><h3>You own your site.</h3><p>After your first year, leave anytime and take it with you.</p></div>
+    <div><h3>No setup fee.</h3><p>Your first month starts it. Six-month minimum, then month to month.</p></div>
     <div><h3>No surprise invoices.</h3><p>One price, every month. Changes are included.</p></div>
   </div>
 </div></section>
@@ -309,8 +309,8 @@ footer{padding-block:60px calc(40px + env(safe-area-inset-bottom,0px));overflow:
   <div>
     <details open><summary>Is the preview really free?<i></i></summary><p>Yes. We design your new homepage and send it over. No cost and no obligation.</p></details>
     <details><summary>What do I need to do?<i></i></summary><p>One short call to review the design. We take care of the content, the build and the launch.</p></details>
-    <details><summary>Is there a contract?<i></i></summary><p>The monthly plan has a 12-month term. After that it's month to month, and you can leave anytime.</p></details>
-    <details><summary>Do I own my website?<i></i></summary><p>Yes. Your domain stays in your name, and after your first year you can take your site with you.</p></details>
+    <details><summary>Is there a contract?<i></i></summary><p>Both plans have a six-month minimum. After that it's month to month, and you can cancel with 30 days' notice.</p></details>
+    <details><summary>Do I own my website?<i></i></summary><p>Your domain, logo, photos and words are always yours. If you ever leave, you can keep the site itself with a one-time $500 buyout.</p></details>
     <details><summary>How fast is it?<i></i></summary><p>Most sites go live about a week after you approve the design.</p></details>
     <details><summary>Can I make changes later?<i></i></summary><p>Anytime. Send a message with what you need and we take care of it. It's included.</p></details>
   </div>
@@ -510,8 +510,8 @@ function setOdo(str){
   odo.setAttribute('aria-label', '$' + str);
 }
 var plans = {
-  month:{p:'299', label:'Monthly plan', per:'CAD per month', sub:'+ $500 one-time build'},
-  year:{p:'2,990', label:'Pay the year', per:'CAD for twelve months', sub:'Build included. One payment.'}
+  month:{p:'199', label:'Starter', per:'CAD per month', sub:'1–2 pages. No setup fee.'},
+  year:{p:'299', label:'Full site', per:'CAD per month', sub:'Multiple pages. No setup fee.'}
 };
 var bm = document.getElementById('b-month'), by = document.getElementById('b-year'), pill = document.getElementById('pill');
 function pick(key){
